@@ -1,0 +1,77 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}
+    Zoom
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        より詳細に
+    </p>
+
+    <table class="table table-striped mb-5">
+        <thead>
+            <tr>
+                <th scope="col">問</th>
+                <th scope="col">くじW</th>
+                <th scope="col">くじM</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>
+                    1～5のカード: 1,000円<br>
+                    6～10のカード: -1,000円
+                </td>
+                <td>確実に{{ price1 }}円</td>
+                <td>{% formfield player.zoom1 %}</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>
+                    1～5のカード: 1,000円<br>
+                    6～10のカード: -1,000円
+                </td>
+                <td>確実に{{ price2 }}円</td>
+                <td>{% formfield player.zoom2 %}</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>
+                    1～5のカード: 1,000円<br>
+                    6～10のカード: -1,000円
+                </td>
+                <td>確実に{{ price3 }}円</td>
+                <td>{% formfield player.zoom3 %}</td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+                <td>
+                    1～5のカード: 1,000円<br>
+                    6～10のカード: -1,000円
+                </td>
+                <td>確実に{{ price4 }}円</td>
+                <td>{% formfield player.zoom4 %}</td>
+            </tr>
+            <tr>
+                <th scope="row">5</th>
+                <td>
+                    1～5のカード: 1,000円<br>
+                    6～10のカード: -1,000円
+                </td>
+                <td>確実に{{ price5 }}円</td>
+                <td>{% formfield player.zoom5 %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <button name="page_back" value="False" class="btn btn-primary">次へ</button>
+        <button name="page_back" value="True" class="btn btn-secondary">やっぱり変える</button>
+    </div>
+
+{% endblock %}

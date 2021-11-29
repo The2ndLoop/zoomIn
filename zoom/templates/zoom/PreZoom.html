@@ -1,0 +1,82 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block title %}
+    PreZoom
+{% endblock %}
+
+{% block content %}
+
+    <p>
+        よくきった10枚のカードから1枚ひくことを考えてください。
+    </p>
+
+    <p>
+        各問でひいたカードは必ず10枚のデックに戻し，改めて1枚カードをひきます。
+    </p>
+
+    <p>
+        これを前提に，各問でくじＷかＭかを選んでください。各問は独立に考えて選択してください。
+    </p>
+
+    <table class="table table-striped mb-5">
+        <thead>
+            <tr>
+                <th scope="col">問</th>
+                <th scope="col">くじW</th>
+                <th scope="col">くじM</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>
+                    1～5のカード: 1,000円<br>
+                    6～10のカード: -1,000円
+                </td>
+                <td>確実に400円</td>
+                <td>{% formfield player.risk1 %}</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>
+                    1～5のカード: 1,000円<br>
+                    6～10のカード: -1,000円
+                </td>
+                <td>確実に400円</td>
+                <td>{% formfield player.risk2 %}</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>
+                    1～5のカード: 1,000円<br>
+                    6～10のカード: -1,000円
+                </td>
+                <td>確実に400円</td>
+                <td>{% formfield player.risk3 %}</td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+                <td>
+                    1～5のカード: 1,000円<br>
+                    6～10のカード: -1,000円
+                </td>
+                <td>確実に400円</td>
+                <td>{% formfield player.risk4 %}</td>
+            </tr>
+            <tr>
+                <th scope="row">5</th>
+                <td>
+                    1～5のカード: 1,000円<br>
+                    6～10のカード: -1,000円
+                </td>
+                <td>確実に400円</td>
+                <td>{% formfield player.risk5 %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% next_button %}
+
+{% endblock %}

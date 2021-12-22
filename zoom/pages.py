@@ -17,12 +17,70 @@ class PreZoom(Page):
     form_fields = [*risks,]
 
     def is_displayed(self):
-        return self.player.page_back
+        flag = self.player.page_back
+        
+        if self.player.sw_point is False:
+            flag = False
+
+        return flag
 
     def before_next_page(self):
-        # スイッチポイントの計算
-        pass
-        
+        '''
+        【パターン1】
+        最初からW(1)を選択する変なやつの場合
+        分析から外したいので、ZoomInのページは表示しない。
+        sw_pointにFalseでもいれてfor文抜ける。
+        flagが1になる可能性があるので、とっととfor文を抜ける
+        '''
+        if self.player.risk1 == 1:
+                sw_point = False
+        else:
+            risks = [self.player.risk1, self.player.risk2, self.player.risk3, self.player.risk4, self.player.risk5,]
+            
+            # くじMの1問目の価格をとりあえず入れとく。後で理由は分かる。
+            # 本当はConstantsとかに設定しておくべき
+            sw_point = 400
+
+            risks_len = len(risks)  
+
+            # スイッチポイントの計算
+            for idx, risk in enumerate(risks):
+                '''
+                【パターン2】
+                全部Mのやつ
+                これは0->1にスイッチしないので、flagが永遠に0でfor文を完遂する。
+                今回の場合、最後の質問は「確実に0円」、100円刻みなので、-100円をスイッチポイントとして仮定する。
+                '''
+
+                # ２問目でスイッチしたとするとスイッチポイントは300円
+                # ということは、ループする度にsw_pointから100ずつ引いていけばスイッチポイントになる。
+                sw_point -= 100
+
+                # 例外処理
+                # 最終ループのときさっさと抜けないとflagの計算でidx+1番目の要素がないとエラーが起きる。
+                if risks_len == idx + 1:
+                    break
+
+                # このコードは最終ループでエラーを起こす。
+                # idx + 1が5になったらそんなのリストにありませんって言われる。
+                flag = risks[idx +1] - risks[idx]
+
+                '''
+                【パターン2】
+                合理的にいくと初めはM(0)を選択する。
+                途中でW(1)に選択をスイッチする。
+                M->Wすなわち0->1にスイッチしたときはflagが1のときで捕捉できる。
+                【パターン3】
+                MWMMWWみたいなM→W行ったのにMに戻る変な人。
+                最初のM→Wの部分がスイッチポイントで処理。
+                これもflagが1になった瞬間にfor文抜ければ良い。
+                '''
+                
+                if flag == 1:
+                    break
+
+        self.player.sw_point = sw_point
+
 
 
 class Zoom(Page):
@@ -33,7 +91,12 @@ class Zoom(Page):
     form_fields = [*zooms, "page_back"]
     
     def is_displayed(self):
-        return self.player.page_back
+        flag = self.player.page_back
+        
+        if self.player.sw_point is False:
+            flag = False
+
+        return flag
 
     def vars_for_template(self):
         # スイッチポイントをつかって
@@ -43,11 +106,11 @@ class Zoom(Page):
         # というような感じで画面に表示したい
 
         return dict(
-                price1 = self.player.sw_point - 100, 
-                price2 = self.player.sw_point - 50, 
+                price1 = self.player.sw_point - 50, 
+                price2 = self.player.sw_point - 25, 
                 price3 = self.player.sw_point, 
-                price4 = self.player.sw_point + 50, 
-                price5 = self.player.sw_point + 100
+                price4 = self.player.sw_point + 25, 
+                price5 = self.player.sw_point + 50
             )
 
     def before_next_page(self):

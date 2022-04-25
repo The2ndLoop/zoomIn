@@ -106,11 +106,11 @@ class Zoom(Page):
         # というような感じで画面に表示したい
 
         return dict(
-                price1 = self.player.sw_point - 50, 
-                price2 = self.player.sw_point - 25, 
+                price1 = self.player.sw_point + 50, 
+                price2 = self.player.sw_point + 25, 
                 price3 = self.player.sw_point, 
-                price4 = self.player.sw_point + 25, 
-                price5 = self.player.sw_point + 50
+                price4 = self.player.sw_point - 25, 
+                price5 = self.player.sw_point - 50
             )
 
     def before_next_page(self):
